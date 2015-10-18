@@ -33,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new TabFragment(), "Tab 1");
-        adapter.addFragment(new TabFragment(), "Tab 2");
-        adapter.addFragment(new TabFragment(), "Tab 3");
+        adapter.addFragment(new TabFragment(), "Task List");
+        adapter.addFragment(new TabFragment(), "Create Task");
+        adapter.addFragment(new TabFragment(), "Upload Logs");
         viewPager.setAdapter(adapter);
     }
 
