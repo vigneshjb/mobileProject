@@ -1,5 +1,6 @@
 package cse535.group38.resquebot;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,13 +15,33 @@ import android.view.ViewGroup;
  */
 public class TabFragment extends Fragment {
 
+    static int viewType = 1;
+    int currentViewType;
+
+    public TabFragment(){
+        currentViewType =  viewType++;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        RecyclerView rv = (RecyclerView) inflater.inflate(
-                R.layout.recycler_view, container, false);
-        setupRecyclerView(rv);
-        return rv;
+        if (this.currentViewType == 1){
+            RecyclerView rv = (RecyclerView) inflater.inflate(
+                    R.layout.recycler_view, container, false);
+            setupRecyclerView(rv);
+            return rv;
+        }
+        else if (this.currentViewType == 2){
+            ViewGroup rootView = (ViewGroup) inflater.inflate(
+                    R.layout.new_task, container, false);
+            return rootView;
+        }
+        else if (this.currentViewType == 3){
+            ViewGroup rootView = (ViewGroup) inflater.inflate(
+                    R.layout.upload_logs, container, false);
+            return rootView;
+        }
+        return null;
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
@@ -28,7 +49,7 @@ public class TabFragment extends Fragment {
         recyclerView.setAdapter(new SimpleRecyclerViewAdapter());
     }
 
-    public static class SimpleRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+    public static class SimpleRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -37,7 +58,6 @@ public class TabFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
-
         }
 
         @Override
@@ -45,5 +65,4 @@ public class TabFragment extends Fragment {
             return 0;
         }
     }
-
 }
