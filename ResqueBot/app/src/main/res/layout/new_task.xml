@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/dark_grey">
 
     <TextView
@@ -12,4 +12,15 @@
         android:layout_height="match_parent"
         android:text="Lorem Ipsum"/>
 
-</LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="add"
+        android:onClick="insertIntoTask"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="77dp" />
+
+
+</RelativeLayout>
