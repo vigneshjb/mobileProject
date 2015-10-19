@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import cse535.group38.resquebot.model.EventDesp;
 import cse535.group38.resquebot.model.Task;
 
 /**
@@ -21,7 +20,6 @@ public class DAO extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "resque";
 
     private static final String TASKS_TABLE_NAME = "tasks";
-    private static final String EVENT_DESP_TABLE_NAME = "eventdesp";
 
     public DAO(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -30,13 +28,12 @@ public class DAO extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String REQSUEBOT_CREATE_STATEMENT = "CREATE TABLE IF NOT EXISTS " + TASKS_TABLE_NAME +
-                " ( ID INTEGER PRIMARY KEY AUTOINCREMENT, EVENT_ID INTEGER, STATUS_ID INTEGER );";
-        String EVENTDES_CREATE_STATEMENT = "CREATE TABLE IF NOT EXISTS " + EVENT_DESP_TABLE_NAME +
-                " ( ID INTEGER PRIMARY KEY AUTOINCREMENT, TRIGGER_ID INTEGER, ACTION_TYPE INTEGER, FROM_STATE VARCHAR(20), TO_STATE VARCHAR(20) );";
+        String TASK_CREATE_STATEMENT = "CREATE TABLE IF NOT EXISTS " + TASKS_TABLE_NAME +
+                " ( ID INTEGER PRIMARY KEY AUTOINCREMENT, EVENT_ID INTEGER, TRIGGER_ID INTEGER, " +
+                "ACTION_TYPE INTEGER, FROM_STATE VARCHAR(20), TO_STATE VARCHAR(20), " +
+                "STATUS_ID INTEGER );";
 
-        db.execSQL(REQSUEBOT_CREATE_STATEMENT);
-        db.execSQL(EVENTDES_CREATE_STATEMENT);
+        db.execSQL(TASK_CREATE_STATEMENT);
     }
 
     @Override
@@ -53,9 +50,13 @@ public class DAO extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Task task = new Task();
-                task.setId(Integer.parseInt(null==cursor.getString(0)?"0":cursor.getString(0)));
-                task.setEventId(Integer.parseInt(null == cursor.getString(1)?"0":cursor.getString(1)));
-                task.setStatusId(Integer.parseInt(null==cursor.getString(2)?"0":cursor.getString(2)));
+                task.setId(Integer.parseInt(cursor.getString(0)));
+                task.setEventId(Integer.parseInt(cursor.getString(1)));
+                task.setTriggerId(Integer.parseInt(cursor.getString(2)));
+                task.setActionType(Integer.parseInt(cursor.getString(3)));
+                task.setFromState(cursor.getString(4));
+                task.setToState(cursor.getString(5));
+                task.setStatusId(Integer.parseInt(cursor.getString(6)));
                 allTasks.add(task);
             } while (cursor.moveToNext());
         }
@@ -63,44 +64,18 @@ public class DAO extends SQLiteOpenHelper {
         return allTasks;
     }
 
-    public List<EventDesp> getAllEventDesps(){
-        List<EventDesp> allEventDesp = new ArrayList<EventDesp>();
-        String selectQuery = "SELECT  * FROM " + EVENT_DESP_TABLE_NAME;
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                EventDesp eventDesp = new EventDesp();
-                eventDesp.setId(Integer.parseInt(cursor.getString(0)));
-                eventDesp.setTriggerId(Integer.parseInt(cursor.getString(1)));
-                eventDesp.setActionType(Integer.parseInt(cursor.getString(2)));
-                eventDesp.setFromState(cursor.getString(3));
-                eventDesp.setToState(cursor.getString(4));
-                allEventDesp.add(eventDesp);
-            } while (cursor.moveToNext());
-        }
-
-        return allEventDesp;
-    }
+    //SELECT * FROM TASKS, EVENTDESP WHERE EVENTDESP.EVENTID = TASK.EVENTID
 
     public void insertTask(Task task){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("EVENT_ID", task.getEventId());
+        values.put("TRIGGER_ID", task.getTriggerId());
+        values.put("ACTION_TYPE", task.getActionType());
+        values.put("FROM_STATE", task.getFromState());
+        values.put("TO_STATE", task.getToState());
         values.put("STATUS_ID", task.getStatusId());
         db.insert(TASKS_TABLE_NAME, null, values);
-        db.close();
-    }
-
-    public void insertEventDesp(EventDesp eventDesp){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("TRIGGER_ID", eventDesp.getTriggerId());
-        values.put("ACTION_TYPE", eventDesp.getActionType());
-        values.put("FROM_STATE", eventDesp.getFromState());
-        values.put("TO_STATE", eventDesp.getToState());
-        db.insert(EVENT_DESP_TABLE_NAME, null, values);
         db.close();
     }
 

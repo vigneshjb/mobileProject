@@ -5,17 +5,25 @@ package cse535.group38.resquebot.model;
  */
 public class Task {
 
-    //ID INTEGER, EVENT_ID INTEGER, STATUS INTEGER
+    //ID INTEGER, EVENT_ID INTEGER, TRIGGER_ID INTEGER, ACTION_TYPE INTEGER, FROM_STATE VARCHAR(20), TO_STATE VARCHAR(20)
     private int id;
     private int eventId;
+    private int triggerId;
+    private int actionType;
+    private String fromState;
+    private String toState;
     private int statusId;
 
     public Task(){}
 
-    public Task(int id, int eventId, int statusId){
-        this.id=id;
-        this.eventId=eventId;
-        this.statusId=statusId;
+    public Task(int id, int triggerId, int eventId, int actionType, String fromState, String toState, int statusId){
+        this.id = id;
+        this.eventId = eventId;
+        this.actionType = actionType;
+        this.triggerId = triggerId;
+        this.fromState = fromState;
+        this.toState = toState;
+        this.statusId = statusId;
     }
 
     public int getId() {
@@ -34,16 +42,49 @@ public class Task {
         this.eventId = eventId;
     }
 
-    public int getStatusId() {
+    public int getTriggerId() {
+        return triggerId;
+    }
+
+    public void setTriggerId(int triggerId) {
+        this.triggerId = triggerId;
+    }
+
+    public int getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(int actionType) {
+        this.actionType = actionType;
+    }
+
+    public String getFromState() {
+        return fromState;
+    }
+
+    public void setFromState(String fromState) {
+        this.fromState = fromState;
+    }
+
+    public String getToState() {
+        return toState;
+    }
+
+    public void setToState(String toState) {
+        this.toState = toState;
+    }
+
+    public int getStatusId(){
         return statusId;
     }
 
-    public void setStatusId(int statusId) {
+    public void setStatusId(int statusId){
         this.statusId = statusId;
     }
 
     public String toString(){
-        return "id = " + id + " eventId = " + eventId + " statusId = " + statusId;
+        return "TASK DESP : id=" + id + " eventId=" + eventId + " triggerId=" + triggerId +
+                " actionType=" + actionType + " fromState=" + fromState + " toState=" + toState +
+                " statusId=" + statusId;
     }
-
 }
