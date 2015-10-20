@@ -36,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        callService();
+        callService(); //TODO: change this to "startWifiListener".
     }
     
-    public void callService()
+    public void callService()//TODO: change this to "startWifiListener".
     {
         Intent intService = new Intent(this, WifiService.class);
         startService(intService);

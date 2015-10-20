@@ -14,7 +14,7 @@ import android.net.wifi.WifiManager;
 import android.widget.Toast;
 import android.content.Intent;
 import android.os.IBinder;
-
+//TODO: create a new package called backgroundService and move this class into that.
 public class WifiService extends Service {
 
     String ssid;
