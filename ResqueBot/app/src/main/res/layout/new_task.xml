@@ -1,26 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/content"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/dark_grey">
+    android:layout_height="match_parent"
+    android:background="@color/dark_grey"
+    android:orientation="vertical"
+    android:padding="10dp">
 
-    <TextView
-        android:id="@+id/newText"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Lorem Ipsum"/>
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Trigger Id"
+        android:id="@+id/newTriggerId"
+        android:inputType="number"/>
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Action Type"
+        android:id="@+id/newActionType"
+        android:inputType="number"/>
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="From State"
+        android:id="@+id/newFromState"/>
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="To State"
+        android:id="@+id/newToState"/>
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Status Id"
+        android:id="@+id/newStatusId"
+        android:inputType="number"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="add"
-        android:onClick="insertIntoTask"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="77dp" />
+        android:onClick="insertIntoTask" />
 
-
-</RelativeLayout>
+</LinearLayout>

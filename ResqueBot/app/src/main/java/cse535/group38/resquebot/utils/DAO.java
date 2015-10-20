@@ -17,8 +17,8 @@ import cse535.group38.resquebot.model.Task;
 public class DAO extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 2;
-    private static final String DATABASE_NAME = "resque";
 
+    private static final String DATABASE_NAME = "resque";
     private static final String TASKS_TABLE_NAME = "tasks";
 
     public DAO(Context context){
@@ -29,10 +29,9 @@ public class DAO extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String TASK_CREATE_STATEMENT = "CREATE TABLE IF NOT EXISTS " + TASKS_TABLE_NAME +
-                " ( ID INTEGER PRIMARY KEY AUTOINCREMENT, EVENT_ID INTEGER, TRIGGER_ID INTEGER, " +
+                " ( ID INTEGER PRIMARY KEY AUTOINCREMENT, TRIGGER_ID INTEGER, " +
                 "ACTION_TYPE INTEGER, FROM_STATE VARCHAR(20), TO_STATE VARCHAR(20), " +
-                "STATUS_ID INTEGER );";
-
+                "STATUS_ID INTEGER )";
         db.execSQL(TASK_CREATE_STATEMENT);
     }
 
@@ -51,16 +50,14 @@ public class DAO extends SQLiteOpenHelper {
             do {
                 Task task = new Task();
                 task.setId(Integer.parseInt(cursor.getString(0)));
-                task.setEventId(Integer.parseInt(cursor.getString(1)));
-                task.setTriggerId(Integer.parseInt(cursor.getString(2)));
-                task.setActionType(Integer.parseInt(cursor.getString(3)));
-                task.setFromState(cursor.getString(4));
-                task.setToState(cursor.getString(5));
-                task.setStatusId(Integer.parseInt(cursor.getString(6)));
+                task.setTriggerId(Integer.parseInt(cursor.getString(1)));
+                task.setActionType(Integer.parseInt(cursor.getString(2)));
+                task.setFromState(cursor.getString(3));
+                task.setToState(cursor.getString(4));
+                task.setStatusId(Integer.parseInt(cursor.getString(5)));
                 allTasks.add(task);
             } while (cursor.moveToNext());
         }
-
         return allTasks;
     }
 
@@ -69,7 +66,6 @@ public class DAO extends SQLiteOpenHelper {
     public void insertTask(Task task){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("EVENT_ID", task.getEventId());
         values.put("TRIGGER_ID", task.getTriggerId());
         values.put("ACTION_TYPE", task.getActionType());
         values.put("FROM_STATE", task.getFromState());
@@ -77,6 +73,27 @@ public class DAO extends SQLiteOpenHelper {
         values.put("STATUS_ID", task.getStatusId());
         db.insert(TASKS_TABLE_NAME, null, values);
         db.close();
+    }
+
+    public List<Task> getTaskByTrigger(int triggerId){
+        List<Task> allTasks = new ArrayList<Task>();
+        String selectQuery = "SELECT  * FROM " + TASKS_TABLE_NAME + " WHERE TRIGGER_ID = " + triggerId;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Task task = new Task();
+                task.setId(Integer.parseInt(cursor.getString(0)));
+                task.setTriggerId(Integer.parseInt(cursor.getString(1)));
+                task.setActionType(Integer.parseInt(cursor.getString(2)));
+                task.setFromState(cursor.getString(3));
+                task.setToState(cursor.getString(4));
+                task.setStatusId(Integer.parseInt(cursor.getString(5)));
+                allTasks.add(task);
+            } while (cursor.moveToNext());
+        }
+        return allTasks;
     }
 
 }

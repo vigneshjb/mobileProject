@@ -7,7 +7,6 @@ public class Task {
 
     //ID INTEGER, EVENT_ID INTEGER, TRIGGER_ID INTEGER, ACTION_TYPE INTEGER, FROM_STATE VARCHAR(20), TO_STATE VARCHAR(20)
     private int id;
-    private int eventId;
     private int triggerId;
     private int actionType;
     private String fromState;
@@ -16,9 +15,8 @@ public class Task {
 
     public Task(){}
 
-    public Task(int id, int triggerId, int eventId, int actionType, String fromState, String toState, int statusId){
+    public Task(int id, int triggerId, int actionType, String fromState, String toState, int statusId){
         this.id = id;
-        this.eventId = eventId;
         this.actionType = actionType;
         this.triggerId = triggerId;
         this.fromState = fromState;
@@ -32,14 +30,6 @@ public class Task {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(int eventId) {
-        this.eventId = eventId;
     }
 
     public int getTriggerId() {
@@ -83,8 +73,7 @@ public class Task {
     }
 
     public String toString(){
-        return "TASK DESP : id=" + id + " eventId=" + eventId + " triggerId=" + triggerId +
-                " actionType=" + actionType + " fromState=" + fromState + " toState=" + toState +
-                " statusId=" + statusId;
+        return "TASK DESP : id=" + id + " triggerId=" + triggerId + " actionType=" + actionType +
+                " fromState=" + fromState + " toState=" + toState + " statusId=" + statusId;
     }
 }
