@@ -1,5 +1,6 @@
 package cse535.group38.resquebot;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -29,6 +30,12 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        callService();
+    }
+    public void callService()
+    {
+        Intent intService = new Intent(this, WifiService.class);
+        startService(intService);
     }
 
     private void setupViewPager(ViewPager viewPager) {
