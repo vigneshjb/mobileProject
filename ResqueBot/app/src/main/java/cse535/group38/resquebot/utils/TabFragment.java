@@ -1,4 +1,4 @@
-package cse535.group38.resquebot;
+package cse535.group38.resquebot.utils;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import cse535.group38.resquebot.R;
 
 /**
  * Created by vignesh.jayabalan on 10/7/15.

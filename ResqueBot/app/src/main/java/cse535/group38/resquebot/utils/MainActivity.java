@@ -1,4 +1,4 @@
-package cse535.group38.resquebot;
+package cse535.group38.resquebot.utils;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -12,6 +12,8 @@ import android.support.design.widget.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cse535.group38.resquebot.R;
 
 public class MainActivity extends AppCompatActivity {
 
