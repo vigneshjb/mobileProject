@@ -8,6 +8,14 @@
     android:paddingBottom="8dp"
     android:gravity="center_vertical">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/avatar"
+        android:src="@drawable/wifi"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="16dp"
+        />
+
     <TextView
         android:id="@+id/taskListItem"
         android:layout_width="match_parent"

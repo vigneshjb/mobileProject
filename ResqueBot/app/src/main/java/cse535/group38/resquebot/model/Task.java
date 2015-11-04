@@ -5,22 +5,22 @@ package cse535.group38.resquebot.model;
  */
 public class Task {
 
-    //ID INTEGER, EVENT_ID INTEGER, TRIGGER_ID INTEGER, ACTION_TYPE INTEGER, FROM_STATE VARCHAR(20), TO_STATE VARCHAR(20)
+    //ID, TRIGGER_ID, ACTION_TYPE, TRIGGER_DATA, ACTION_DATA, STATUS_ID
     private int id;
     private int triggerId;
     private int actionType;
-    private String fromState;
-    private String toState;
+    private String triggerData;
+    private String actionData;
     private int statusId;
 
     public Task(){}
 
-    public Task(int id, int triggerId, int actionType, String fromState, String toState, int statusId){
+    public Task(int id, int triggerId, int actionType, String triggerData, String actionData, int statusId){
         this.id = id;
         this.actionType = actionType;
         this.triggerId = triggerId;
-        this.fromState = fromState;
-        this.toState = toState;
+        this.triggerData = triggerData;
+        this.actionData = actionData;
         this.statusId = statusId;
     }
 
@@ -48,20 +48,20 @@ public class Task {
         this.actionType = actionType;
     }
 
-    public String getFromState() {
-        return fromState;
+    public String getTriggerData() {
+        return triggerData;
     }
 
-    public void setFromState(String fromState) {
-        this.fromState = fromState;
+    public void setTriggerData(String triggerData) {
+        this.triggerData = triggerData;
     }
 
-    public String getToState() {
-        return toState;
+    public String getActionData() {
+        return actionData;
     }
 
-    public void setToState(String toState) {
-        this.toState = toState;
+    public void setActionData(String actionData) {
+        this.actionData = actionData;
     }
 
     public int getStatusId(){
@@ -72,8 +72,12 @@ public class Task {
         this.statusId = statusId;
     }
 
+    public String getDisplayText(){
+        return "On Connecting to : " + triggerData + " perform : " + actionType + " to " + actionData;
+    }
+
     public String toString(){
         return "TASK DESP : id=" + id + " triggerId=" + triggerId + " actionType=" + actionType +
-                " fromState=" + fromState + " toState=" + toState + " statusId=" + statusId;
+                " triggerData=" + triggerData + " actionData=" + actionData + " statusId=" + statusId;
     }
 }

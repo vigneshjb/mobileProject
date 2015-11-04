@@ -62,7 +62,7 @@ public class TabFragment extends Fragment {
         List<String> listReturn = new ArrayList<>();
         List<Task> allTasks = dbUtil.getAllTasks();
         for (Task task : allTasks){
-            listReturn.add(task.toString());
+            listReturn.add(task.getDisplayText());
         }
         return listReturn;
     }

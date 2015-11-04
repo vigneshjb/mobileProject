@@ -22,12 +22,12 @@ public class UiDelegate {
             task.setActionType(Integer.parseInt(tv.getText().toString()));
             tv.setText("");
 
-            tv = (TextView) currentActivity.findViewById(R.id.newFromState);
-            task.setFromState(tv.getText().toString());
+            tv = (TextView) currentActivity.findViewById(R.id.newTriggerData);
+            task.setTriggerData(tv.getText().toString());
             tv.setText("");
 
-            tv = (TextView) currentActivity.findViewById(R.id.newToState);
-            task.setToState(tv.getText().toString());
+            tv = (TextView) currentActivity.findViewById(R.id.newActionData);
+            task.setActionData(tv.getText().toString());
             tv.setText("");
 
             tv = (TextView) currentActivity.findViewById(R.id.newStatusId);

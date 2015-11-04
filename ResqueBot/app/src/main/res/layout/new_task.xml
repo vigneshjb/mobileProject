@@ -43,8 +43,8 @@
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="From State"
-            android:id="@+id/newFromState"
+            android:hint="Trigger Data"
+            android:id="@+id/newTriggerData"
             android:windowSoftInputMode="adjustResize|stateHidden"/>
 
         <android.widget.Space
@@ -54,8 +54,8 @@
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="To State"
-            android:id="@+id/newToState"
+            android:hint="Action Data"
+            android:id="@+id/newActionData"
             android:windowSoftInputMode="adjustResize|stateHidden"/>
 
         <android.widget.Space
@@ -81,6 +81,7 @@
                 app:layout_anchor="@id/content"
                 app:layout_anchorGravity="right"
                 android:onClick="insertIntoTask"
+                android:src="@drawable/done"
                 android:clickable="true"
                 android:layout_margin="10dp"/>
 

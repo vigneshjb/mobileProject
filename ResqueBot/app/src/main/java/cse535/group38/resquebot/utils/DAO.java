@@ -30,7 +30,7 @@ public class DAO extends SQLiteOpenHelper {
 
         String TASK_CREATE_STATEMENT = "CREATE TABLE IF NOT EXISTS " + TASKS_TABLE_NAME +
                 " ( ID INTEGER PRIMARY KEY AUTOINCREMENT, TRIGGER_ID INTEGER, " +
-                "ACTION_TYPE INTEGER, FROM_STATE VARCHAR(20), TO_STATE VARCHAR(20), " +
+                "ACTION_TYPE INTEGER, TRIGGER_DATA VARCHAR(20), ACTION_DATA VARCHAR(20), " +
                 "STATUS_ID INTEGER )";
         db.execSQL(TASK_CREATE_STATEMENT);
     }
@@ -52,8 +52,8 @@ public class DAO extends SQLiteOpenHelper {
                 task.setId(Integer.parseInt(cursor.getString(0)));
                 task.setTriggerId(Integer.parseInt(cursor.getString(1)));
                 task.setActionType(Integer.parseInt(cursor.getString(2)));
-                task.setFromState(cursor.getString(3));
-                task.setToState(cursor.getString(4));
+                task.setTriggerData(cursor.getString(3));
+                task.setActionData(cursor.getString(4));
                 task.setStatusId(Integer.parseInt(cursor.getString(5)));
                 allTasks.add(task);
             } while (cursor.moveToNext());
@@ -68,8 +68,8 @@ public class DAO extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("TRIGGER_ID", task.getTriggerId());
         values.put("ACTION_TYPE", task.getActionType());
-        values.put("FROM_STATE", task.getFromState());
-        values.put("TO_STATE", task.getToState());
+        values.put("TRIGGER_DATA", task.getTriggerData());
+        values.put("ACTION_DATA", task.getActionData());
         values.put("STATUS_ID", task.getStatusId());
         db.insert(TASKS_TABLE_NAME, null, values);
         db.close();
@@ -87,8 +87,8 @@ public class DAO extends SQLiteOpenHelper {
                 task.setId(Integer.parseInt(cursor.getString(0)));
                 task.setTriggerId(Integer.parseInt(cursor.getString(1)));
                 task.setActionType(Integer.parseInt(cursor.getString(2)));
-                task.setFromState(cursor.getString(3));
-                task.setToState(cursor.getString(4));
+                task.setTriggerData(cursor.getString(3));
+                task.setActionData(cursor.getString(4));
                 task.setStatusId(Integer.parseInt(cursor.getString(5)));
                 allTasks.add(task);
             } while (cursor.moveToNext());
