@@ -18,7 +18,9 @@ public class PerformTasks {
         try {
 
             for (Task task : tasks) {
-                switch (task.getName()) {
+                Integer a = task.getActionType();
+                String actionKey = Constants.ACTION_CONSTANTS.get(a)==null? Constants.ACTION_CONSTANTS.get(4) : Constants.ACTION_CONSTANTS.get(a);
+                switch (actionKey) {
 
                     case "SilentProfile":
                         AudioManager audioManagerVibrate = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);

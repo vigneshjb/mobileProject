@@ -18,8 +18,6 @@ import java.util.List;
 import cse535.group38.resquebot.model.Task;
 import cse535.group38.resquebot.utils.DAO;
 
-import cse535.group38.resquebot.R;
-
 /**
  * Created by vignesh.jayabalan on 10/7/15.
  */
@@ -56,10 +54,10 @@ public class TabFragment extends Fragment {
 
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        recyclerView.setAdapter(new SimpleRecyclerViewAdapter(getActivity(), getRandomSublist()));
+        recyclerView.setAdapter(new SimpleRecyclerViewAdapter(getActivity(), getTaskDisplaylist()));
     }
 
-    private List<String> getRandomSublist(){
+    private List<String> getTaskDisplaylist(){
         DAO dbUtil = new DAO(getContext());
         List<String> listReturn = new ArrayList<>();
         List<Task> allTasks = dbUtil.getAllTasks();

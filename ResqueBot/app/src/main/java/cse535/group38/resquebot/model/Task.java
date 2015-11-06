@@ -1,10 +1,5 @@
 package cse535.group38.resquebot.model;
 
-import java.util.List;
-import java.util.Random;
-
-import cse535.group38.resquebot.utils.Constants;
-
 /**
  * Created by vignesh.jayabalan on 10/11/15.
  */
@@ -84,14 +79,6 @@ public class Task {
     public String toString(){
         return "TASK DESP : id=" + id + " triggerId=" + triggerId + " actionType=" + actionType +
                 " triggerData=" + triggerData + " actionData=" + actionData + " statusId=" + statusId;
-    }
-
-    //Temp code
-
-    public String getName(){
-        String returnData = Constants.ACTION_CONSTANTS.get(this.actionType)==null? Constants.ACTION_CONSTANTS.get(4) : Constants.ACTION_CONSTANTS.get(this.actionType);
-        System.out.println("***********************************"+returnData);
-        return returnData;
     }
 
 }
