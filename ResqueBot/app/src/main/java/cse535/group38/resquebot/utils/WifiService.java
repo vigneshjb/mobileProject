@@ -20,16 +20,19 @@ import cse535.group38.resquebot.model.Task;
 
 public class WifiService extends Service {
 
+    DAO dbUtil;
+
     String ssid;
     //TODO: delete this temporary tasks and already storedSsids. Decide how to store tasks as numbers and associate that number with a name/ or directly store as names etc
     ArrayList<String> storedSsids = new ArrayList<String>();
     //TODO: Temporary mapping of ssids to tasks
-    HashMap<String, ArrayList<Task>> ssidToTasks = new HashMap<String, ArrayList<Task>>();
+    //HashMap<String, ArrayList<Task>> ssidToTasks = new HashMap<String, ArrayList<Task>>();
     ArrayList<Task> tasksForSsid = new ArrayList<Task>();
 
     @Override
     public void onCreate() {
-        Task taskSilentProfile = new Task();
+        dbUtil = new DAO(getApplicationContext());
+        /*Task taskSilentProfile = new Task();
         Task taskNormalProfile = new Task();
         Task taskReduceBrightness = new Task();
         Task taskIncreaseBrightness= new Task();
@@ -41,7 +44,7 @@ public class WifiService extends Service {
         taskReduceBrightness.setName("ReduceBrightness");
         tasksForSsid.add(taskReduceBrightness);
         taskIncreaseBrightness.setName("DefaultBrightness");
-        tasksForSsid.add(taskIncreaseBrightness);
+        tasksForSsid.add(taskIncreaseBrightness);*/
         this.registerReceiver(this.myWifiReceiver,
                 new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
@@ -72,12 +75,12 @@ public class WifiService extends Service {
             //TODO: Must have all SSID's and there associated tasks for the particular SSID in DB (may be something like a hashmap for easy searching of SSID's)
 
             ssid = myWifiInfo.getSSID();
-            ssidToTasks.put(ssid, tasksForSsid);
+            //ssidToTasks.put(ssid, tasksForSsid);
             //TODO: Temporarily added ssid
             storedSsids.add(ssid);
             if (storedSsids.contains(ssid)) {
                 //Get the associated tasks for that SSID
-                ArrayList<Task> tasksToBePerformed = ssidToTasks.get(ssid);
+                List<Task> tasksToBePerformed = dbUtil.getActionList(ssid);
                 PerformTasks taskObj = new PerformTasks();
                 taskObj.performTasks(tasksToBePerformed, getApplicationContext());
             } else {

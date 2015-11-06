@@ -14,7 +14,7 @@ import java.lang.*;
  * Created by nikki on 10/23/2015.
  */
 public class PerformTasks {
-    public void performTasks(ArrayList<Task> tasks, Context context) {
+    public void performTasks(List<Task> tasks, Context context) {
         try {
 
             for (Task task : tasks) {

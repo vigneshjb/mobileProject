@@ -96,6 +96,27 @@ public class DAO extends SQLiteOpenHelper {
         return allTasks;
     }
 
+    public List<Task> getActionList(String triggerData){
+        List<Task> returnData = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + TASKS_TABLE_NAME + " WHERE TRIGGER_DATA = " + triggerData;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Task task = new Task();
+                task.setId(Integer.parseInt(cursor.getString(0)));
+                task.setTriggerId(Integer.parseInt(cursor.getString(1)));
+                task.setActionType(Integer.parseInt(cursor.getString(2)));
+                task.setTriggerData(cursor.getString(3));
+                task.setActionData(cursor.getString(4));
+                task.setStatusId(Integer.parseInt(cursor.getString(5)));
+                returnData.add(task);
+            } while (cursor.moveToNext());
+        }
+        return returnData;
+    }
+
 }
 
 /* SAMPLE FILE.

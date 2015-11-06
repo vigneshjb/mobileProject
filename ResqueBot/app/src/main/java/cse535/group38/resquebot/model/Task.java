@@ -1,5 +1,8 @@
 package cse535.group38.resquebot.model;
 
+import java.util.List;
+import java.util.Random;
+
 /**
  * Created by vignesh.jayabalan on 10/11/15.
  */
@@ -12,7 +15,6 @@ public class Task {
     private String triggerData;
     private String actionData;
     private int statusId;
-    private String name;
 
     public Task(){}
 
@@ -73,14 +75,6 @@ public class Task {
         this.statusId = statusId;
     }
 
-    public String getName(){
-        return name;
-    }
-
-    public void setName(String name){
-        this.name = name;
-    }
-
     public String getDisplayText(){
         return "On Connecting to : " + triggerData + " perform : " + actionType + " to " + actionData;
     }
@@ -89,4 +83,18 @@ public class Task {
         return "TASK DESP : id=" + id + " triggerId=" + triggerId + " actionType=" + actionType +
                 " triggerData=" + triggerData + " actionData=" + actionData + " statusId=" + statusId;
     }
+
+    //Temp code
+
+    private static final String[] nameArray = {
+            "NormalProfile", "SilentProfile", "ReduceBrightness" , "DefaultBrightness"
+    };
+
+    public String getName(){
+        Random RANDOM = new Random();
+        String returnData = nameArray[RANDOM.nextInt(4)];
+        System.out.println("***********************************"+returnData);
+        return returnData;
+    }
+
 }
