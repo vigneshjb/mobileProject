@@ -1,15 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/content"
+
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/dark_grey">
+    android:layout_height="wrap_content"
+    android:background="@color/dark_grey"
+    android:fillViewport="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <TextView
-        android:id="@+id/newText"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Lorem Ipsum"/>
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Trigger Id"
+            android:id="@+id/newTriggerId"
+            android:inputType="number"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+
+        <android.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Action Type"
+            android:id="@+id/newActionType"
+            android:inputType="number"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+
+        <android.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Trigger Data"
+            android:id="@+id/newTriggerData"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+
+        <android.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Action Data"
+            android:id="@+id/newActionData"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+
+        <android.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Status Id"
+            android:id="@+id/newStatusId"
+            android:inputType="number"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/content">
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                app:layout_anchor="@id/content"
+                app:layout_anchorGravity="right"
+                android:onClick="insertIntoTask"
+                android:src="@drawable/done"
+                android:clickable="true"
+                android:layout_margin="10dp"/>
+
+        </android.support.design.widget.CoordinatorLayout>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
+
+
+
+
+
+

@@ -1,6 +1,7 @@
-package cse535.group38.resquebot.utils;
+package cse535.group38.resquebot;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -9,11 +10,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.TabLayout;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cse535.group38.resquebot.R;
+import cse535.group38.resquebot.delegate.UiDelegate;
+import cse535.group38.resquebot.model.Task;
+import cse535.group38.resquebot.delegate.DbDelegate;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,11 +37,12 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        callService();
+        callService(); //TODO: change this to "startWifiListener".
     }
-    public void callService()
+    
+    public void callService()//TODO: change this to "startWifiListener".
     {
-        Intent intService = new Intent(this, WifiService.class);
+        Intent intService = new Intent(this, cse535.group38.resquebot.utils.WifiService.class);
         startService(intService);
     }
 
@@ -75,5 +81,23 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitles.get(position);
         }
+    }
+
+    // UI based Event Listeners
+    public void insertIntoTask(View view){
+        if (DbDelegate.writeTaskToDb(getNewTaskFromUI(), getApplicationContext()))
+            showSnackBar("Task Created");
+        else
+            showSnackBar("Creating Task Failed");
+    }
+
+    // UI based Object Builder and flush UI
+    public Task getNewTaskFromUI(){
+        return UiDelegate.getNewTask(this);
+    }
+
+    public void showSnackBar(String message){
+        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT)
+                .show();
     }
 }
