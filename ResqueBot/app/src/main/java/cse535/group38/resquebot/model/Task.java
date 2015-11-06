@@ -3,6 +3,8 @@ package cse535.group38.resquebot.model;
 import java.util.List;
 import java.util.Random;
 
+import cse535.group38.resquebot.utils.Constants;
+
 /**
  * Created by vignesh.jayabalan on 10/11/15.
  */
@@ -86,13 +88,8 @@ public class Task {
 
     //Temp code
 
-    private static final String[] nameArray = {
-            "NormalProfile", "SilentProfile", "ReduceBrightness" , "DefaultBrightness"
-    };
-
     public String getName(){
-        Random RANDOM = new Random();
-        String returnData = nameArray[RANDOM.nextInt(4)];
+        String returnData = Constants.ACTION_CONSTANTS.get(this.actionType)==null? Constants.ACTION_CONSTANTS.get(4) : Constants.ACTION_CONSTANTS.get(this.actionType);
         System.out.println("***********************************"+returnData);
         return returnData;
     }
