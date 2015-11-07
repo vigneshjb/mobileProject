@@ -3,6 +3,7 @@ package cse535.group38.resquebot.background;
 /**
  * Created by nikki on 10/19/2015.
  */
+
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,50 +15,67 @@ import android.net.wifi.WifiManager;
 import android.widget.Toast;
 import android.content.Intent;
 import android.os.IBinder;
-//TODO: create a new package called backgroundService and move this class into that.
-public class WifiService extends Service {
 
+import java.util.*;
+
+import cse535.group38.resquebot.model.Task;
+import cse535.group38.resquebot.utils.DAO;
+import cse535.group38.resquebot.utils.PerformTasks;
+
+public class WifiService extends Service {
+    DAO dbUtil;
     String ssid;
+    ArrayList<String> storedSsids = new ArrayList<String>();
 
     @Override
-    public void onCreate()
-    {
+    public void onCreate() {
+        dbUtil = new DAO(getApplicationContext());
         this.registerReceiver(this.myWifiReceiver,
                 new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
+
     private BroadcastReceiver myWifiReceiver
-            = new BroadcastReceiver(){
+            = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context arg0, Intent intent) {
             NetworkInfo networkInfo = (NetworkInfo) intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
-            if(networkInfo.getType() == ConnectivityManager.TYPE_WIFI){
+            if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
                 printWifiConnectivity();
             }
-        }};
+        }
+    };
 
-    private void printWifiConnectivity(){
+    private void printWifiConnectivity() {
 
         ConnectivityManager connectManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        WifiManager wifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         WifiInfo myWifiInfo = wifiManager.getConnectionInfo();
 
-        Context context = getApplicationContext();
-        if (networkInfo.isConnected()){
-            //Can do some tasks here based on already known ssid's. If its a new SSId, we can prompt user to register this ssid as Home/school etc and suggest tasks
+        final Context context = getApplicationContext();
+        if (networkInfo.isConnected()) {
             ssid = myWifiInfo.getSSID();
-            Toast.makeText(context, "ResqueBot Msg: Wifi Connected to "+ssid, Toast.LENGTH_SHORT).show();
+            //TODO: Temporarily added ssid
+            storedSsids.add(ssid);
+            if (storedSsids.contains(ssid)) {
+                //Get the associated tasks for that SSID
+                List<Task> tasksToBePerformed = dbUtil.getActionList(ssid);
+                PerformTasks taskObj = new PerformTasks();
+                taskObj.performTasks(tasksToBePerformed, getApplicationContext());
+            } else {
+                storedSsids.add(ssid);
+                //TODO: promptuser some tasks and also perform those tasks
+            }
+            Toast.makeText(context, "ResqueBot Msg: Wifi Connected to " + ssid, Toast.LENGTH_SHORT).show();
         }
-        else{
-            //Do something if Wifi not available
-            Toast.makeText(context, "ResqueBot Msg: Wifi Disconnected to "+ssid, Toast.LENGTH_SHORT).show();
-        }
-
     }
+
+
     @Override
     public IBinder onBind(Intent arg0) {
         // TODO Auto-generated method stub
         return null;
     }
 }
+

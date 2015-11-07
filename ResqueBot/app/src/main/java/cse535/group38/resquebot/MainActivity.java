@@ -15,6 +15,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import cse535.group38.resquebot.background.WifiService;
 import cse535.group38.resquebot.delegate.UiDelegate;
 import cse535.group38.resquebot.model.Task;
 import cse535.group38.resquebot.delegate.DbDelegate;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     
     public void callService()//TODO: change this to "startWifiListener".
     {
-        Intent intService = new Intent(this, cse535.group38.resquebot.utils.WifiService.class);
+        Intent intService = new Intent(this, WifiService.class);
         startService(intService);
     }
 
