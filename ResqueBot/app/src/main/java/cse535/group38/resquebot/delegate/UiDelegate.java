@@ -44,16 +44,16 @@ public class UiDelegate {
 
         try {
             TextView tv = (TextView) currentActivity.findViewById(R.id.newTriggerId);
-            tv.setText(task.getTriggerId());
+            tv.setText((String.valueOf(task.getTriggerId())));
 
             tv = (TextView) currentActivity.findViewById(R.id.newActionType);
-            tv.setText(task.getActionType());
+            tv.setText((String.valueOf(task.getActionType())));
 
             tv = (TextView) currentActivity.findViewById(R.id.newTriggerData);
-            tv.setText(task.getTriggerData());
+            tv.setText((String.valueOf(task.getTriggerData())));
 
             tv = (TextView) currentActivity.findViewById(R.id.newActionData);
-            tv.setText(task.getActionData());
+            tv.setText((String.valueOf(task.getActionData())));
 
         }catch (Exception e){
             System.out.println("Reading from UI failed : " + e);

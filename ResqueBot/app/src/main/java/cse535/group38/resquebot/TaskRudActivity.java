@@ -21,7 +21,7 @@ public class TaskRudActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_task);
         Intent intent = getIntent();
-        currentTask = (Task) intent.getSerializableExtra("taskObject");
+        currentTask = (Task) intent.getExtras().getSerializable("taskObject");
         UiDelegate.populateTask(this,currentTask);
     }
 
