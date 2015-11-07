@@ -31,10 +31,8 @@ public class UiDelegate {
             tv.setText("");
 
             task.setStatusId(1);
-            tv.setText("");
 
         }catch (Exception e){
-
             System.out.println("Reading from UI failed : " + e);
             return null;
         }

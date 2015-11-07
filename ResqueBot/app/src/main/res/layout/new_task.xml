@@ -62,14 +62,6 @@
             android:layout_width="match_parent"
             android:layout_height="10dp" />
 
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="Status Id"
-            android:id="@+id/newStatusId"
-            android:inputType="number"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
-
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
