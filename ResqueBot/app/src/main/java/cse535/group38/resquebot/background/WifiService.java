@@ -56,19 +56,23 @@ public class WifiService extends Service {
         final Context context = getApplicationContext();
         if (networkInfo.isConnected()) {
             ssid = myWifiInfo.getSSID();
-            //TODO: Temporarily added ssid
-            storedSsids.add(ssid);
-            if (storedSsids.contains(ssid)) {
-                //Get the associated tasks for that SSID
-                List<Task> tasksToBePerformed = dbUtil.getActionList(ssid);
+            List<Task> tasksToBePerformed = dbUtil.getActionList(ssid);
+            if (tasksToBePerformed.size() == 0){
+                createTaskNewSSID(ssid);
+                Toast.makeText(context, "ResqueBot Msg: New Wifi SSID Detected :" + ssid, Toast.LENGTH_SHORT).show();
+            }
+            else{
                 PerformTasks taskObj = new PerformTasks();
                 taskObj.performTasks(tasksToBePerformed, getApplicationContext());
-            } else {
-                storedSsids.add(ssid);
-                //TODO: promptuser some tasks and also perform those tasks
+                Toast.makeText(context, "ResqueBot Msg: Existing Wifi Detected", Toast.LENGTH_SHORT).show();
             }
-            Toast.makeText(context, "ResqueBot Msg: Wifi Connected to " + ssid, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void createTaskNewSSID(String ssid) {
+        // TODO: complete this part :P
+        //analyze the ssid name
+        //populate the DB
     }
 
 

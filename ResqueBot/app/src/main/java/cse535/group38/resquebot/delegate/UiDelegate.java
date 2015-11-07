@@ -30,8 +30,7 @@ public class UiDelegate {
             task.setActionData(tv.getText().toString());
             tv.setText("");
 
-            tv = (TextView) currentActivity.findViewById(R.id.newStatusId);
-            task.setStatusId(Integer.parseInt(tv.getText().toString()));
+            task.setStatusId(1);
             tv.setText("");
 
         }catch (Exception e){
