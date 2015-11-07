@@ -18,6 +18,7 @@ import android.os.IBinder;
 
 import java.util.*;
 
+import cse535.group38.resquebot.delegate.DbDelegate;
 import cse535.group38.resquebot.model.Task;
 import cse535.group38.resquebot.utils.DAO;
 import cse535.group38.resquebot.utils.PerformTasks;
@@ -57,22 +58,39 @@ public class WifiService extends Service {
         if (networkInfo.isConnected()) {
             ssid = myWifiInfo.getSSID();
             List<Task> tasksToBePerformed = dbUtil.getActionList(ssid);
-            if (tasksToBePerformed.size() == 0){
+            if (tasksToBePerformed.size() == 0) {
                 createTaskNewSSID(ssid);
                 Toast.makeText(context, "ResqueBot Msg: New Wifi SSID Detected :" + ssid, Toast.LENGTH_SHORT).show();
-            }
-            else{
+            } else {
                 PerformTasks taskObj = new PerformTasks();
                 taskObj.performTasks(tasksToBePerformed, getApplicationContext());
-                Toast.makeText(context, "ResqueBot Msg: Existing Wifi Detected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "ResqueBot Msg: Existing Wifi Detected :" + ssid, Toast.LENGTH_SHORT).show();
             }
         }
     }
 
+    //TODO: Onslide Listener: automatically list tasks in the "TaskList" tab of the App
     private void createTaskNewSSID(String ssid) {
-        // TODO: complete this part :P
+        final Context context = getApplicationContext();
+        DbDelegate dbDelegate = new DbDelegate();
+        ssid = ssid.substring(1, ssid.length() - 1);
         //analyze the ssid name
-        //populate the DB
+        //TODO: change "asu" to "home"
+        if (ssid.toLowerCase().matches(".*home.*") || ssid.toLowerCase().matches(".*house.*") || ssid.toLowerCase().matches(".*public.*")) {
+            //TODO: Temporary parameters 1->triggerId, actionData
+            Task task = new Task(0, 1, ssid, "temp", 0); //Normal Profile - ActionType =1, statusId= 0(Will be 1 when user activates it).
+            dbDelegate.writeTaskToDb(task, context);
+            task = new Task(0, 4, ssid, "temp", 0); //Default Brightness - ActionType =4, statusId= 0(Will be 1 when user activates it).
+            dbDelegate.writeTaskToDb(task, context);
+            Toast.makeText(context, "Possible Home/Public Network Identified :" + ssid + "Possible tasks suggested", Toast.LENGTH_SHORT).show();
+        }
+        if (ssid.toLowerCase().matches(".*guest.*")) {
+            Task task = new Task(0, 2, ssid, "temp", 0);
+            dbDelegate.writeTaskToDb(task, context);
+            task = new Task(0, 3, ssid, "temp", 0);
+            dbDelegate.writeTaskToDb(task, context);
+            Toast.makeText(context, "Possible guest Network Identified :" + ssid, Toast.LENGTH_SHORT).show();
+        }
     }
 
 
