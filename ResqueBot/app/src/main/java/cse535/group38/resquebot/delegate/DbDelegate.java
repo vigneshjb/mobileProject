@@ -22,4 +22,28 @@ public class DbDelegate {
         return true;
     }
 
+    public static boolean updateTask(Task task, Context context) {
+        if (task == null)
+            return false;
+        DAO dbObj = new DAO(context);
+        try {
+            if (dbObj.updateTask(task)<1)
+                throw new Exception("Some Error");
+        }catch (Exception e){
+            System.out.println("Writing to Db failed in DbDelegate : " + e);
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean deleteTask(int id, Context context) {
+        DAO dbObj = new DAO(context);
+        try {
+            dbObj.deleteTask(id);
+        }catch (Exception e){
+            System.out.println("Writing to Db failed in DbDelegate : " + e);
+            return false;
+        }
+        return true;
+    }
 }

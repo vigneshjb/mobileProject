@@ -56,7 +56,7 @@ public class UiDelegate {
             tv.setText((String.valueOf(task.getActionData())));
 
         }catch (Exception e){
-            System.out.println("Reading from UI failed : " + e);
+            System.out.println("Populating the UI failed : " + e);
         }
 
     }

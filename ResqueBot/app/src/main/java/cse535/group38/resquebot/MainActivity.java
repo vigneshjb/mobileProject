@@ -23,6 +23,8 @@ import cse535.group38.resquebot.delegate.DbDelegate;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static String message = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +41,13 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         callService(); //TODO: change this to "startWifiListener".
+    }
+
+    @Override
+    protected void onPostResume(){
+        super.onPostResume();
+        if(message.length()!=0)
+            showSnackBar(message);
     }
     
     public void callService()//TODO: change this to "startWifiListener".
