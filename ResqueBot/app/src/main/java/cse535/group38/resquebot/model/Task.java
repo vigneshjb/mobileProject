@@ -24,6 +24,14 @@ public class Task {
         this.statusId = statusId;
     }
 
+    public Task(int triggerId, int actionType, String triggerData, String actionData, int statusId){
+        this.actionType = actionType;
+        this.triggerId = triggerId;
+        this.triggerData = triggerData;
+        this.actionData = actionData;
+        this.statusId = statusId;
+    }
+
     public int getId() {
         return id;
     }
