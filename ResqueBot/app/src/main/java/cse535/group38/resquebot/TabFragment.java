@@ -38,6 +38,14 @@ public class TabFragment extends Fragment {
             RecyclerView rv = (RecyclerView) inflater.inflate(R.layout.recycler_view, container, false);
             setupRecyclerView(rv);
             global = rv;
+
+            rv.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if(hasFocus){
+                        setupRecyclerView((RecyclerView) v);
+                    }
+                }
+            });
         }
         else if (this.currentViewType == 2){
             ViewGroup rootView = (ViewGroup) inflater.inflate(
@@ -50,6 +58,13 @@ public class TabFragment extends Fragment {
             global = rootView;
         }
         return global;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if (this.currentViewType == 1)
+            setupRecyclerView((RecyclerView)this.getView());
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
