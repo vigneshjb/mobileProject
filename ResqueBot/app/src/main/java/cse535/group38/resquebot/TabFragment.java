@@ -1,6 +1,7 @@
 package cse535.group38.resquebot;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cse535.group38.resquebot.model.Task;
@@ -57,24 +57,20 @@ public class TabFragment extends Fragment {
         recyclerView.setAdapter(new SimpleRecyclerViewAdapter(getActivity(), getTaskDisplaylist()));
     }
 
-    private List<String> getTaskDisplaylist(){
+    private List<Task> getTaskDisplaylist(){
         DAO dbUtil = new DAO(getContext());
-        List<String> listReturn = new ArrayList<>();
         List<Task> allTasks = dbUtil.getAllTasks();
-        for (Task task : allTasks){
-            listReturn.add(task.getDisplayText());
-        }
-        return listReturn;
+        return allTasks;
     }
 
     public static class SimpleRecyclerViewAdapter extends RecyclerView.Adapter<SimpleRecyclerViewAdapter.ViewHolder> {
 
         private final TypedValue mTypedValue = new TypedValue();
-        private List<String> strList;
+        private List<Task> taskList;
 
-        public SimpleRecyclerViewAdapter(Context context, List<String> items) {
+        public SimpleRecyclerViewAdapter(Context context, List<Task> items) {
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
-            strList = items;
+            taskList = items;
         }
 
         @Override
@@ -85,31 +81,43 @@ public class TabFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder viewHolder, int i) {
-            viewHolder.mBoundString = strList.get(i);
-            viewHolder.mTextView.setText(null==strList.get(i)?"":strList.get(i));
+        public void onBindViewHolder(final ViewHolder viewHolder, int i) {
+            viewHolder.displayText = taskList.get(i).getDisplayText();
+            viewHolder.task = taskList.get(i);
+            viewHolder.taskDespUIComp.setText(null == taskList.get(i) ? "" : taskList.get(i).getDisplayText());
+
+            viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, TaskRudActivity.class);
+                    intent.putExtra("taskObject", viewHolder.task);
+                    context.startActivity(intent);
+                }
+            });
+
         }
 
         @Override
         public int getItemCount() {
-            return strList.size();
+            return taskList.size();
         }
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
-            public String mBoundString;
-
+            public String displayText;
+            public Task task;
             public final View mView;
-            public final TextView mTextView;
+            public final TextView taskDespUIComp;
 
             public ViewHolder(View view) {
                 super(view);
                 mView = view;
-                mTextView = (TextView) view.findViewById(R.id.taskListItem);
+                taskDespUIComp = (TextView) view.findViewById(R.id.taskListItem);
             }
 
             @Override
             public String toString() {
-                return super.toString() + " " + mTextView.getText();
+                return super.toString() + " " + taskDespUIComp.getText();
             }
         }
     }

@@ -1,9 +1,11 @@
 package cse535.group38.resquebot.model;
 
+import java.io.Serializable;
+
 /**
  * Created by vignesh.jayabalan on 10/11/15.
  */
-public class Task {
+public class Task implements Serializable {
 
     //ID, TRIGGER_ID, ACTION_TYPE, TRIGGER_DATA, ACTION_DATA, STATUS_ID
     private int id;
