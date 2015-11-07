@@ -75,7 +75,7 @@ public class WifiService extends Service {
         DbDelegate dbDelegate = new DbDelegate();
         ssid = ssid.substring(1, ssid.length() - 1);
         //analyze the ssid name
-        //TODO: change "asu" to "home"
+        //TODO: change "asu"
         if (ssid.toLowerCase().matches(".*asu.*") || ssid.toLowerCase().matches(".*house.*") || ssid.toLowerCase().matches(".*public.*")) {
             //TODO: Temporary parameters 1->triggerId, actionData
             Task task = new Task(0, 1, ssid, "temp", 0); //Normal Profile - ActionType =1, statusId= 0(Will be 1 when user activates it).

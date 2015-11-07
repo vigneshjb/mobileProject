@@ -6,9 +6,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.text.SimpleDateFormat;
 
+import cse535.group38.resquebot.model.Log;
 import cse535.group38.resquebot.model.Task;
 
 /**
@@ -20,6 +26,7 @@ public class DAO extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "resque";
     private static final String TASKS_TABLE_NAME = "tasks";
+    private static final String LOGS_TABLE_NAME = "logs";
 
     public DAO(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -33,12 +40,18 @@ public class DAO extends SQLiteOpenHelper {
                 "ACTION_TYPE INTEGER, TRIGGER_DATA VARCHAR(20), ACTION_DATA VARCHAR(20), " +
                 "STATUS_ID INTEGER )";
         db.execSQL(TASK_CREATE_STATEMENT);
+
+        String LOG_CREATE_STATEMENT = "CREATE TABLE IF NOT EXISTS " + LOGS_TABLE_NAME +
+                " ( DATE VARCHAR(20), DESCRIPTION VARCHAR(20) )" ;
+        db.execSQL(LOG_CREATE_STATEMENT);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
+    // _____________________________________________ TASK OPERATIONS ____________________________________________
 
     public List<Task> getAllTasks(){
         List<Task> allTasks = new ArrayList<Task>();
@@ -136,6 +149,65 @@ public class DAO extends SQLiteOpenHelper {
         db.delete(TASKS_TABLE_NAME, "id" + " = ?",
                 new String[] { String.valueOf(id) });
         db.close();
+    }
+
+    // _____________________________________________ LOG OPERATIONS _____________________________________________
+
+    //Gets all logs
+    public List<Log> getAllLogs()
+    {
+        List<Log> allLogs = new ArrayList<Log>();
+        String selectQuery = "SELECT  * FROM " + LOGS_TABLE_NAME;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Log log = new Log();
+                log.setDate(cursor.getString(0));
+                log.setDescription(cursor.getString(1));
+                allLogs.add(log);
+            } while (cursor.moveToNext());
+        }
+        return allLogs;
+    }
+
+    public void insertLog(Log log){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("DATE", log.getDate());
+        values.put("DESCRIPTION", log.getDescription());
+        db.insert(LOGS_TABLE_NAME, null, values);
+        db.close();
+
+        //TODO: Remove this temp printing method
+        System.out.println("***************LOG INSERTED*************");
+        printAllLogs();
+        clearLogs();
+    }
+
+    public void clearLogs() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + LOGS_TABLE_NAME);
+        db.close();
+
+        //TODO: Remove this temp printing method
+        System.out.println("***************LOG TABLE CLEARED*************");
+        printAllLogs();
+    }
+
+    //TODO: Temp print allLogs
+    public void printAllLogs(){
+        List<Log> allLogs = getAllLogs();
+        if(allLogs.size()!=0)
+            for(Log log : allLogs)
+            {
+                System.out.println("||||| DATE= "+log.getDate()+"DESCRIPTION = "+log.getDescription()+"|||||");
+            }
+        else
+        {
+            System.out.println("**********LOGS TABLE EMPTY*********");
+        }
     }
 }
 

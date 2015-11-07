@@ -101,6 +101,11 @@ public class MainActivity extends AppCompatActivity {
             showSnackBar("Creating Task Failed");
     }
 
+    //Onclick Listener for uploading logs
+    public void uploadLogs(View view){
+
+    }
+
     // UI based Object Builder and flush UI
     public Task getNewTaskFromUI(){
         return UiDelegate.getNewTask(this);
