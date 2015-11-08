@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import cse535.group38.resquebot.delegate.DbDelegate;
@@ -21,6 +22,11 @@ public class TaskRudActivity extends AppCompatActivity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task_rud);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.taskRudToolbar1);
+        toolbar.setTitle("Edit Task");
+        setSupportActionBar(toolbar);
+
         Intent intent = getIntent();
         currentTask = (Task) intent.getExtras().getSerializable("taskObject");
         UiDelegate.populateTask(this, currentTask);
