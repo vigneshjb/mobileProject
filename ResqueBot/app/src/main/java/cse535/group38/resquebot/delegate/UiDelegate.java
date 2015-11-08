@@ -55,7 +55,7 @@ public class UiDelegate {
             tv.setText((String.valueOf(task.getTriggerData())));
 
             Spinner sp = (Spinner) currentActivity.findViewById(R.id.newActionType);
-            sp.setSelection(task.getActionType()-1);    
+            sp.setSelection(task.getActionType()-1);
 
             //TODO: not have this field at all if not required
 //            tv = (TextView) currentActivity.findViewById(R.id.newActionData);
