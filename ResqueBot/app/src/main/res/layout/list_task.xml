@@ -13,21 +13,19 @@
         android:src="@drawable/wifi"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginRight="16dp"
-        />
+        android:layout_marginRight="16dp" />
 
     <TextView
         android:id="@+id/taskListItem"
-        android:layout_width="wrap_content"
+        android:layout_width="255dp"
         android:layout_height="wrap_content"
         android:textAppearance="?attr/textAppearanceListItem"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/deleteTask"
-        android:src="@drawable/wifi"
-        android:layout_width="40dp"
+        android:id="@+id/statusInd"
+        android:src="@drawable/inactive"
+        android:layout_width="fill_parent"
         android:layout_height="40dp"
-        android:layout_marginLeft="16dp"
-        />
+        android:gravity="right"/>
 
 </LinearLayout>

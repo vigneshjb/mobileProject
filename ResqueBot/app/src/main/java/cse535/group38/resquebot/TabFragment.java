@@ -1,7 +1,10 @@
 package cse535.group38.resquebot;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,10 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.io.InputStream;
 import java.util.List;
 
 import cse535.group38.resquebot.model.Task;
 import cse535.group38.resquebot.utils.DAO;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by vignesh.jayabalan on 10/7/15.
@@ -97,9 +102,15 @@ public class TabFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(final ViewHolder viewHolder, int i) {
+            InputStream is = null;
             viewHolder.displayText = taskList.get(i).getDisplayText();
             viewHolder.task = taskList.get(i);
             viewHolder.taskDespUIComp.setText(null == taskList.get(i) ? "" : taskList.get(i).getDisplayText());
+
+            if (viewHolder.task.getStatusId() == 1){
+                CircleImageView cv = (CircleImageView) viewHolder.mView.findViewById(R.id.statusInd);
+                cv.setImageResource(R.drawable.active);
+            }
 
             viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -110,7 +121,6 @@ public class TabFragment extends Fragment {
                     context.startActivity(intent);
                 }
             });
-
         }
 
         @Override

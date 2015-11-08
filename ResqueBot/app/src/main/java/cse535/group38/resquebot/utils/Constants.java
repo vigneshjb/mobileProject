@@ -8,12 +8,20 @@ import java.util.Map;
  */
 public class Constants {
 
-    public static final Map<Integer, String> ACTION_CONSTANTS = new HashMap<>();
+    public static final Map<Integer, String> ACTION_TYPE_CONSTANTS = new HashMap<>();
+
+    public static final Map<String, Integer> REV_ACTION_TYPE_CONSTANTS = new HashMap<>();
+
     static {
-        ACTION_CONSTANTS.put(1,"NormalProfile");
-        ACTION_CONSTANTS.put(2,"SilentProfile");
-        ACTION_CONSTANTS.put(3,"ReduceBrightness");
-        ACTION_CONSTANTS.put(4,"DefaultBrightness");
+        ACTION_TYPE_CONSTANTS.put(1,"NormalProfile");
+        ACTION_TYPE_CONSTANTS.put(2,"SilentProfile");
+        ACTION_TYPE_CONSTANTS.put(3,"ReduceBrightness");
+        ACTION_TYPE_CONSTANTS.put(4,"DefaultBrightness");
+
+        REV_ACTION_TYPE_CONSTANTS.put("NormalProfile", 1);
+        REV_ACTION_TYPE_CONSTANTS.put("SilentProfile", 2);
+        REV_ACTION_TYPE_CONSTANTS.put("ReduceBrightness", 3);
+        REV_ACTION_TYPE_CONSTANTS.put("DefaultBrightness", 4);
     }
 
 }
