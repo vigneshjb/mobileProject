@@ -2,6 +2,8 @@ package cse535.group38.resquebot.model;
 
 import java.io.Serializable;
 
+import cse535.group38.resquebot.utils.Constants;
+
 /**
  * Created by vignesh.jayabalan on 10/11/15.
  */
@@ -83,7 +85,7 @@ public class Task implements Serializable {
     }
 
     public String getDisplayText(){
-        return "On Connecting to : " + triggerData + " perform : " + actionType + " to " + actionData;
+        return "On Connecting to : " + triggerData + "\nActivate : " + Constants.ACTION_TYPE_CONSTANTS.get(actionType);
     }
 
     public String toString(){

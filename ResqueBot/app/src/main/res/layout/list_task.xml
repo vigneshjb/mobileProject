@@ -22,12 +22,4 @@
         android:layout_height="wrap_content"
         android:textAppearance="?attr/textAppearanceListItem"/>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/deleteTask"
-        android:src="@drawable/wifi"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="16dp"
-        />
-
 </LinearLayout>

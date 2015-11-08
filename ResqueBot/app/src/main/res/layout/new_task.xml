@@ -16,29 +16,20 @@
         android:padding="10dp"
         android:orientation="vertical">
 
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="Trigger Id"
-            android:id="@+id/newTriggerId"
-            android:inputType="number"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <!--TODO: not have this field at all if not required-->
 
-        <android.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
+        <!--<EditText-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:editable="false"-->
+            <!--android:hint="Trigger Id"-->
+            <!--android:id="@+id/newTriggerId"-->
+            <!--android:windowSoftInputMode="adjustResize|stateHidden"-->
+            <!--/>-->
 
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="Action Type"
-            android:id="@+id/newActionType"
-            android:inputType="number"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
-
-        <android.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
+        <!--<android.widget.Space-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="10dp" />-->
 
         <EditText
             android:layout_width="fill_parent"
@@ -51,16 +42,29 @@
             android:layout_width="match_parent"
             android:layout_height="10dp" />
 
-        <EditText
-            android:layout_width="fill_parent"
+        <Spinner
+            android:id="@+id/newActionType"
             android:layout_height="wrap_content"
-            android:hint="Action Data"
-            android:id="@+id/newActionData"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+            android:layout_width="fill_parent"
+            android:entries="@array/action_type_constants"/>
 
         <android.widget.Space
             android:layout_width="match_parent"
             android:layout_height="10dp" />
+
+        <!--TODO: not have this field at all if not required-->
+
+        <!--<EditText-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="Action Data"-->
+            <!--android:editable="false"-->
+            <!--android:id="@+id/newActionData"-->
+            <!--android:windowSoftInputMode="adjustResize|stateHidden"/>-->
+
+        <!--<android.widget.Space-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="10dp" />-->
 
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"

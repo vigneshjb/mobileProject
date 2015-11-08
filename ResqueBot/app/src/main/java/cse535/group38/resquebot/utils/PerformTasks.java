@@ -27,7 +27,7 @@ public class PerformTasks {
                 DAO dbUtil = new DAO(context);
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Date date = new Date();
-                String actionKey = Constants.ACTION_CONSTANTS.get(a)==null? Constants.ACTION_CONSTANTS.get(4) : Constants.ACTION_CONSTANTS.get(a);
+                String actionKey = Constants.ACTION_TYPE_CONSTANTS.get(a)==null? Constants.ACTION_TYPE_CONSTANTS.get(4) : Constants.ACTION_TYPE_CONSTANTS.get(a);
                 switch (actionKey) {
 
                     case "SilentProfile":

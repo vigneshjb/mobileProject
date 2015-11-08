@@ -110,7 +110,6 @@ public class TabFragment extends Fragment {
                     context.startActivity(intent);
                 }
             });
-
         }
 
         @Override
