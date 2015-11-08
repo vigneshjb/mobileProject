@@ -10,18 +10,17 @@ post '/logs' do
 		result_set = JSON.parse(request.body.read)['logs']
 	rescue
 		status 400
-		return "Logs not found"
+		return '{"status":"FAILED", "message":"Logs not found"}'
 	end
 
 	if ( result_set == nil )
 		status 400
-		return "Logs not found"
+		return '{"status":"FAILED", "message":"Logs not found"}'
 	else
 		savelogs(Time.now, result_set)
 		status 200
+		return '{"status":"SUCCESS", "message":"Logs Recorded"}'
 	end
-
-	result_set.to_s
 end
 
 def savelogs(time, result_set)
