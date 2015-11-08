@@ -1,6 +1,7 @@
 package cse535.group38.resquebot.delegate;
 
 import android.app.Activity;
+import android.support.v7.widget.SwitchCompat;
 import android.widget.Spinner;
 import android.widget.TextView;
 import cse535.group38.resquebot.R;
@@ -34,7 +35,11 @@ public class UiDelegate {
 //            task.setActionData(tv.getText().toString());
 //            tv.setText("");
 
-            task.setStatusId(1);
+            SwitchCompat sc = (SwitchCompat) currentActivity.findViewById(R.id.newStatusId);
+            if (null == sc || sc.isChecked())
+                task.setStatusId(1);
+            else
+                task.setStatusId(0);
 
         }catch (Exception e){
             System.out.println("Reading from UI failed : " + e);
@@ -56,6 +61,9 @@ public class UiDelegate {
 
             Spinner sp = (Spinner) currentActivity.findViewById(R.id.newActionType);
             sp.setSelection(task.getActionType()-1);
+
+            SwitchCompat sc = (SwitchCompat) currentActivity.findViewById(R.id.newStatusId);
+            sc.setChecked(task.getStatusId()==1);
 
             //TODO: not have this field at all if not required
 //            tv = (TextView) currentActivity.findViewById(R.id.newActionData);
