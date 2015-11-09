@@ -12,6 +12,10 @@ import android.support.v7.widget.Toolbar;
 import android.support.design.widget.TabLayout;
 import android.view.View;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,19 +112,49 @@ public class MainActivity extends AppCompatActivity {
         if (allLogs.size() == 0) {
             showSnackBar("No Logs to Upload");
         } else {
+            String logsAsString = getLogsAsString(allLogs);
+            //TODO: Remove all Print statements
+            System.out.println("|||||||||||| LOGS_AS_STRING:"+logsAsString);
+            System.out.println("************************************************************************");
+
             //TODO: Upload Logs to the server
-            uploadLogsToServer(allLogs);
+            uploadLogsToServer(logsAsString);
             showSnackBar("Logs Uploaded Successfully");
             DbDelegate.clearLogsInDb(getApplicationContext());
         }
     }
 
-    public void uploadLogsToServer(List<Log> logs) {
-        java.lang.System.out.println("************************************************************************");
+    public void uploadLogsToServer(String logsAsString){
+        //TODO:
+    }
+
+    //Use this method for getting logs as JSON/String
+    public String getLogsAsString(List<Log> logs) {
+        //TODO: Remove all Print statements
+        System.out.println("************************************************************************");
+        //Converting List of Logs to JSON
+        JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
         for (Log log : logs) {
-            java.lang.System.out.println("DATE: " + log.getDate() + " DESCRIPTION: " + log.getDescription());
+            JSONObject tempJsonObject = new JSONObject();
+            try {
+                tempJsonObject.put("TimeStamp", log.getDate());
+                tempJsonObject.put("Description", log.getDescription());
+                jsonArray.put(tempJsonObject);
+                System.out.println("DATE: " + log.getDate() + " DESCRIPTION: " + log.getDescription());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                jsonObject.put("Logs", jsonArray);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
-        java.lang.System.out.println("************************************************************************");
+        System.out.println("|||||||||||||||| LOGS_IN_JSON_ : "+jsonObject);
+        //Converting JSON to String
+        return jsonObject.toString();
     }
 
     // UI based Object Builder and flush UI
