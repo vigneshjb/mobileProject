@@ -91,7 +91,7 @@
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Status"
+                    android:text="ActivateStatus"
                     android:editable="false"
                     android:clickable="false"
                     android:layout_marginRight="50dp"/>

@@ -16,9 +16,12 @@ import android.widget.Toast;
 import android.content.Intent;
 import android.os.IBinder;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import cse535.group38.resquebot.delegate.DbDelegate;
+import cse535.group38.resquebot.model.Log;
 import cse535.group38.resquebot.model.Task;
 import cse535.group38.resquebot.utils.DAO;
 import cse535.group38.resquebot.utils.PerformTasks;
@@ -48,7 +51,10 @@ public class WifiService extends Service {
     };
 
     private void printWifiConnectivity() {
-
+        Log log;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        DbDelegate dbDelegate = new DbDelegate();
         ConnectivityManager connectManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
@@ -60,28 +66,37 @@ public class WifiService extends Service {
             List<Task> tasksToBePerformed = dbUtil.getActionList(ssid);
             if (tasksToBePerformed.size() == 0) {
                 createTaskNewSSID(ssid);
-                Toast.makeText(context, "ResqueBot Msg: New Wifi SSID Detected :" + ssid, Toast.LENGTH_SHORT).show();
+                //Upload Logs
+                log = new Log(dateFormat.format(date), "NEW_WIFI_DETECTED:"+ssid);
+                dbDelegate.writeLogToDb(log, context);
+                Toast.makeText(context, "ResqueBot Msg: New Wifi Detected :" + ssid, Toast.LENGTH_SHORT).show();
             } else {
                 PerformTasks taskObj = new PerformTasks();
                 taskObj.performTasks(tasksToBePerformed, getApplicationContext());
+                //Upload Logs
+                log = new Log(dateFormat.format(date), "EXISTING_WIFI_DETECTED:"+ssid);
+                dbDelegate.writeLogToDb(log, context);
                 Toast.makeText(context, "ResqueBot Msg: Existing Wifi Detected :" + ssid, Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    //TODO: Onslide Listener: automatically list tasks in the "TaskList" tab of the App
     private void createTaskNewSSID(String ssid) {
         final Context context = getApplicationContext();
+        Log log;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
         DbDelegate dbDelegate = new DbDelegate();
         ssid = ssid.substring(1, ssid.length() - 1);
         //analyze the ssid name
-        //TODO: change "asu"
-        if (ssid.toLowerCase().matches(".*asu.*") || ssid.toLowerCase().matches(".*house.*") || ssid.toLowerCase().matches(".*public.*")) {
-            //TODO: Temporary parameters 1->triggerId, actionData
+        if (ssid.toLowerCase().matches(".*home.*") || ssid.toLowerCase().matches(".*house.*") || ssid.toLowerCase().matches(".*public.*") || ssid.toLowerCase().matches(".*free.*")) {
             Task task = new Task(0, 1, ssid, "temp", 0); //Normal Profile - ActionType =1, statusId= 0(Will be 1 when user activates it).
             dbDelegate.writeTaskToDb(task, context);
             task = new Task(0, 4, ssid, "temp", 0); //Default Brightness - ActionType =4, statusId= 0(Will be 1 when user activates it).
             dbDelegate.writeTaskToDb(task, context);
+            //Upload Logs
+            log = new Log(dateFormat.format(date), "NORMAL_PROFILE_AND_NORMAL_BRIGHTNESS_TASKS_SUGGESTED");
+            dbDelegate.writeLogToDb(log, context);
             Toast.makeText(context, "Possible Home/Public Network Identified :" + ssid + "Possible tasks suggested", Toast.LENGTH_SHORT).show();
         }
         if (ssid.toLowerCase().matches(".*guest.*")) {
@@ -90,6 +105,9 @@ public class WifiService extends Service {
             task = new Task(0, 3, ssid, "temp", 0);
             dbDelegate.writeTaskToDb(task, context);
             Toast.makeText(context, "Possible guest Network Identified :" + ssid, Toast.LENGTH_SHORT).show();
+            //Upload Logs
+            log = new Log(dateFormat.format(date), "SILENT_PROFILE_AND_REDUCE_BRIGHTNESS_TASKS_SUGGESTED");
+            dbDelegate.writeLogToDb(log, context);
         }
     }
 

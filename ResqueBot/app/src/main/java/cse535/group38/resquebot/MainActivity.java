@@ -17,6 +17,7 @@ import java.util.List;
 
 import cse535.group38.resquebot.background.WifiService;
 import cse535.group38.resquebot.delegate.UiDelegate;
+import cse535.group38.resquebot.model.Log;
 import cse535.group38.resquebot.model.Task;
 import cse535.group38.resquebot.delegate.DbDelegate;
 
@@ -44,12 +45,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPostResume(){
+    protected void onPostResume() {
         super.onPostResume();
-        if(message.length()!=0)
+        if (message.length() != 0)
             showSnackBar(message);
     }
-    
+
     public void callService()//TODO: change this to "startWifiListener".
     {
         Intent intService = new Intent(this, WifiService.class);
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // UI based Event Listeners
-    public void insertIntoTask(View view){
+    public void insertIntoTask(View view) {
         if (DbDelegate.writeTaskToDb(getNewTaskFromUI(), getApplicationContext()))
             showSnackBar("Task Created");
         else
@@ -102,16 +103,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Onclick Listener for uploading logs
-    public void uploadLogs(View view){
+    public void uploadLogs(View view) {
+        List<Log> allLogs = DbDelegate.getAllLogsFromDb(getApplicationContext());
+        if (allLogs.size() == 0) {
+            showSnackBar("No Logs to Upload");
+        } else {
+            //TODO: Upload Logs to the server
+            uploadLogsToServer(allLogs);
+            showSnackBar("Logs Uploaded Successfully");
+            DbDelegate.clearLogsInDb(getApplicationContext());
+        }
+    }
 
+    public void uploadLogsToServer(List<Log> logs) {
+        java.lang.System.out.println("************************************************************************");
+        for (Log log : logs) {
+            java.lang.System.out.println("DATE: " + log.getDate() + " DESCRIPTION: " + log.getDescription());
+        }
+        java.lang.System.out.println("************************************************************************");
     }
 
     // UI based Object Builder and flush UI
-    public Task getNewTaskFromUI(){
+    public Task getNewTaskFromUI() {
         return UiDelegate.getNewTask(this);
     }
 
-    public void showSnackBar(String message){
+    public void showSnackBar(String message) {
         Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT)
                 .show();
     }
