@@ -157,24 +157,23 @@ public class DAO extends SQLiteOpenHelper {
         values.put("DESCRIPTION", log.getDescription());
         db.insert(LOGS_TABLE_NAME, null, values);
         db.close();
-
+/*
         //TODO: Remove this temp printing method
         System.out.println("***************LOG INSERTED*************");
-        printAllLogs();
-        clearLogs();
+        printAllLogs();*/
     }
 
     public void clearLogs() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + LOGS_TABLE_NAME);
         db.close();
-
+/*
         //TODO: Remove this temp printing method
         System.out.println("***************LOG TABLE CLEARED*************");
-        printAllLogs();
+        printAllLogs();*/
     }
 
-    //TODO: Temp print allLogs
+   /* //TODO: Temp print allLogs
     public void printAllLogs(){
         List<Log> allLogs = getAllLogs();
         if(allLogs.size()!=0)
@@ -186,5 +185,5 @@ public class DAO extends SQLiteOpenHelper {
         {
             System.out.println("**********LOGS TABLE EMPTY*********");
         }
-    }
+    }*/
 }
