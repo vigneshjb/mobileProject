@@ -95,18 +95,28 @@ public class WifiService extends Service {
             task = new Task(0, 4, ssid, "temp", 0); //Default Brightness - ActionType =4, statusId= 0(Will be 1 when user activates it).
             dbDelegate.writeTaskToDb(task, context);
             //Upload Logs
-            log = new Log(dateFormat.format(date), "NORMAL_PROFILE_AND_NORMAL_BRIGHTNESS_TASKS_SUGGESTED");
+            log = new Log(dateFormat.format(date), "NORMAL_PROFILE_AND_NORMAL_BRIGHTNESS_TASKS_SUGGESTED_FOR_SSID "+ssid);
             dbDelegate.writeLogToDb(log, context);
             Toast.makeText(context, "Possible Home/Public Network Identified :" + ssid + "Possible tasks suggested", Toast.LENGTH_SHORT).show();
         }
-        if (ssid.toLowerCase().matches(".*guest.*")) {
-            Task task = new Task(0, 2, ssid, "temp", 0);
+        else
+            if (ssid.toLowerCase().matches(".*guest.*")) {
+                Task task = new Task(0, 2, ssid, "temp", 0);
+                dbDelegate.writeTaskToDb(task, context);
+                task = new Task(0, 3, ssid, "temp", 0);
+                dbDelegate.writeTaskToDb(task, context);
+                Toast.makeText(context, "Possible guest Network Identified :" + ssid, Toast.LENGTH_SHORT).show();
+                //Upload Logs
+                log = new Log(dateFormat.format(date), "SILENT_PROFILE_AND_REDUCE_BRIGHTNESS_TASKS_SUGGESTED_FOR_SSID "+ssid);
+                dbDelegate.writeLogToDb(log, context);
+            }
+        else
+        {
+            //dummy Task
+            Task task = new Task(0, -1, ssid, "temp", 0);
             dbDelegate.writeTaskToDb(task, context);
-            task = new Task(0, 3, ssid, "temp", 0);
-            dbDelegate.writeTaskToDb(task, context);
-            Toast.makeText(context, "Possible guest Network Identified :" + ssid, Toast.LENGTH_SHORT).show();
             //Upload Logs
-            log = new Log(dateFormat.format(date), "SILENT_PROFILE_AND_REDUCE_BRIGHTNESS_TASKS_SUGGESTED");
+            log = new Log(dateFormat.format(date), "DUMMY_TASK_CREATED_FOR_SSID "+ssid);
             dbDelegate.writeLogToDb(log, context);
         }
     }
