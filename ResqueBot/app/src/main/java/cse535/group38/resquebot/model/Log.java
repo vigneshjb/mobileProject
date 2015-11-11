@@ -5,15 +5,23 @@ package cse535.group38.resquebot.model;
  */
 public class Log {
 
-    public String getDate() {
-        return date;
+    private String timestamp;
+    private String description;
+
+    public Log(){}
+
+    public Log(String timestamp, String description) {
+        this.timestamp = timestamp;
+        this.description = description;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public String getTimestamp() {
+        return timestamp;
     }
 
-    private String date;
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
 
     public String getDescription() {
         return description;
@@ -23,11 +31,4 @@ public class Log {
         this.description = description;
     }
 
-    private String description;
-
-    public Log(String date, String description) {
-        this.date = date;
-        this.description = description;
-    }
-    public Log(){}
 }

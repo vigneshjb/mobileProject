@@ -23,7 +23,7 @@ import java.util.*;
 import cse535.group38.resquebot.delegate.DbDelegate;
 import cse535.group38.resquebot.model.Log;
 import cse535.group38.resquebot.model.Task;
-import cse535.group38.resquebot.utils.DAO;
+import cse535.group38.resquebot.dao.DAO;
 import cse535.group38.resquebot.utils.PerformTasks;
 
 public class WifiService extends Service {
@@ -66,14 +66,14 @@ public class WifiService extends Service {
             List<Task> tasksToBePerformed = dbUtil.getActionList(ssid);
             if (tasksToBePerformed.size() == 0) {
                 createTaskNewSSID(ssid);
-                //Upload Logs
+                //Upload UploadLogsDAO
                 log = new Log(dateFormat.format(date), "NEW_WIFI_DETECTED:"+ssid);
                 dbDelegate.writeLogToDb(log, context);
                 Toast.makeText(context, "ResqueBot Msg: New Wifi Detected :" + ssid, Toast.LENGTH_SHORT).show();
             } else {
                 PerformTasks taskObj = new PerformTasks();
                 taskObj.performTasks(tasksToBePerformed, getApplicationContext());
-                //Upload Logs
+                //Upload UploadLogsDAO
                 log = new Log(dateFormat.format(date), "EXISTING_WIFI_DETECTED:"+ssid);
                 dbDelegate.writeLogToDb(log, context);
                 Toast.makeText(context, "ResqueBot Msg: Existing Wifi Detected :" + ssid, Toast.LENGTH_SHORT).show();
@@ -94,8 +94,10 @@ public class WifiService extends Service {
             dbDelegate.writeTaskToDb(task, context);
             task = new Task(0, 4, ssid, "temp", 0); //Default Brightness - ActionType =4, statusId= 0(Will be 1 when user activates it).
             dbDelegate.writeTaskToDb(task, context);
+
             //Upload Logs
             log = new Log(dateFormat.format(date), "NORMAL_PROFILE_AND_NORMAL_BRIGHTNESS_TASKS_SUGGESTED_FOR_SSID "+ssid);
+
             dbDelegate.writeLogToDb(log, context);
             Toast.makeText(context, "Possible Home/Public Network Identified :" + ssid + "Possible tasks suggested", Toast.LENGTH_SHORT).show();
         }
@@ -115,16 +117,15 @@ public class WifiService extends Service {
             //dummy Task
             Task task = new Task(0, -1, ssid, "temp", 0);
             dbDelegate.writeTaskToDb(task, context);
+
             //Upload Logs
             log = new Log(dateFormat.format(date), "DUMMY_TASK_CREATED_FOR_SSID "+ssid);
             dbDelegate.writeLogToDb(log, context);
         }
     }
 
-
     @Override
     public IBinder onBind(Intent arg0) {
-        // TODO Auto-generated method stub
         return null;
     }
 }

@@ -12,6 +12,10 @@ public class Constants {
 
     public static final Map<String, Integer> REV_ACTION_TYPE_CONSTANTS = new HashMap<>();
 
+    public static final String URL = "http://resquebot-backend.herokuapp.com/logs";
+
+    public static final String DEVICE_ID = "VIGNESH_DEVICE";
+
     static {
         ACTION_TYPE_CONSTANTS.put(1,"NormalProfile");
         ACTION_TYPE_CONSTANTS.put(2,"SilentProfile");

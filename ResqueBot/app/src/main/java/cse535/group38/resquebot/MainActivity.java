@@ -12,16 +12,12 @@ import android.support.v7.widget.Toolbar;
 import android.support.design.widget.TabLayout;
 import android.view.View;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import cse535.group38.resquebot.background.WifiService;
+import cse535.group38.resquebot.delegate.ResqueBotDelegate;
 import cse535.group38.resquebot.delegate.UiDelegate;
-import cse535.group38.resquebot.model.Log;
 import cse535.group38.resquebot.model.Task;
 import cse535.group38.resquebot.delegate.DbDelegate;
 
@@ -45,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        callService(); //TODO: change this to "startWifiListener".
+        startBackgroundService();
     }
 
     @Override
@@ -55,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             showSnackBar(message);
     }
 
-    public void callService()//TODO: change this to "startWifiListener".
+    public void startBackgroundService()
     {
         Intent intService = new Intent(this, WifiService.class);
         startService(intService);
@@ -65,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new TabFragment(), "Task List");
         adapter.addFragment(new TabFragment(), "Create Task");
-        adapter.addFragment(new TabFragment(), "Upload Logs");
+        adapter.addFragment(new TabFragment(), "Upload UploadLogsDAO");
         viewPager.setAdapter(adapter);
     }
 
@@ -108,53 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Onclick Listener for uploading logs
     public void uploadLogs(View view) {
-        List<Log> allLogs = DbDelegate.getAllLogsFromDb(getApplicationContext());
-        if (allLogs.size() == 0) {
-            showSnackBar("No Logs to Upload");
-        } else {
-            String logsAsString = getLogsAsString(allLogs);
-            //TODO: Remove all Print statements
-            System.out.println("|||||||||||| LOGS_AS_STRING:"+logsAsString);
-            System.out.println("************************************************************************");
-
-            //TODO: Upload Logs to the server
-            uploadLogsToServer(logsAsString);
-            showSnackBar("Logs Uploaded Successfully");
-            DbDelegate.clearLogsInDb(getApplicationContext());
-        }
-    }
-
-    public void uploadLogsToServer(String logsAsString){
-        //TODO:
-    }
-
-    //Use this method for getting logs as JSON/String
-    public String getLogsAsString(List<Log> logs) {
-        //TODO: Remove all Print statements
-        System.out.println("************************************************************************");
-        //Converting List of Logs to JSON
-        JSONObject jsonObject = new JSONObject();
-        JSONArray jsonArray = new JSONArray();
-        for (Log log : logs) {
-            JSONObject tempJsonObject = new JSONObject();
-            try {
-                tempJsonObject.put("TimeStamp", log.getDate());
-                tempJsonObject.put("Description", log.getDescription());
-                jsonArray.put(tempJsonObject);
-                System.out.println("DATE: " + log.getDate() + " DESCRIPTION: " + log.getDescription());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                jsonObject.put("Logs", jsonArray);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println("|||||||||||||||| LOGS_IN_JSON_ : "+jsonObject);
-        //Converting JSON to String
-        return jsonObject.toString();
+        ResqueBotDelegate.uploadLogsToServer(getApplicationContext(),this);
     }
 
     // UI based Object Builder and flush UI

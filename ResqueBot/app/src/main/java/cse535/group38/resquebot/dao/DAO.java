@@ -1,4 +1,4 @@
-package cse535.group38.resquebot.utils;
+package cse535.group38.resquebot.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,13 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.text.SimpleDateFormat;
 
 import cse535.group38.resquebot.model.Log;
 import cse535.group38.resquebot.model.Task;
@@ -142,7 +137,7 @@ public class DAO extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Log log = new Log();
-                log.setDate(cursor.getString(0));
+                log.setTimestamp(cursor.getString(0));
                 log.setDescription(cursor.getString(1));
                 allLogs.add(log);
             } while (cursor.moveToNext());
@@ -153,37 +148,17 @@ public class DAO extends SQLiteOpenHelper {
     public void insertLog(Log log){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("DATE", log.getDate());
+        values.put("DATE", log.getTimestamp());
         values.put("DESCRIPTION", log.getDescription());
         db.insert(LOGS_TABLE_NAME, null, values);
         db.close();
-/*
-        //TODO: Remove this temp printing method
-        System.out.println("***************LOG INSERTED*************");
-        printAllLogs();*/
     }
 
     public void clearLogs() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + LOGS_TABLE_NAME);
         db.close();
-/*
-        //TODO: Remove this temp printing method
-        System.out.println("***************LOG TABLE CLEARED*************");
-        printAllLogs();*/
     }
 
-   /* //TODO: Temp print allLogs
-    public void printAllLogs(){
-        List<Log> allLogs = getAllLogs();
-        if(allLogs.size()!=0)
-            for(Log log : allLogs)
-            {
-                System.out.println("||||| DATE= "+log.getDate()+"DESCRIPTION = "+log.getDescription()+"|||||");
-            }
-        else
-        {
-            System.out.println("**********LOGS TABLE EMPTY*********");
-        }
-    }*/
+
 }

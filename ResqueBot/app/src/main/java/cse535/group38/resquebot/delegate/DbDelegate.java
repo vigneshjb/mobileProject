@@ -5,8 +5,9 @@ import android.content.Context;
 import java.util.List;
 
 import cse535.group38.resquebot.model.Log;
+import cse535.group38.resquebot.dao.UploadLogsDAO;
 import cse535.group38.resquebot.model.Task;
-import cse535.group38.resquebot.utils.DAO;
+import cse535.group38.resquebot.dao.DAO;
 
 /**
  * Created by vignesh.jayabalan on 10/19/15.
@@ -61,22 +62,25 @@ public class DbDelegate {
         try {
             dbObj.insertLog(log);
         } catch (Exception e) {
-            System.out.println("Writing Logs to Db failed in DbDelegate : " + e);
+            System.out.println("Writing UploadLogsDAO to Db failed in DbDelegate : " + e);
             return false;
         }
         return true;
     }
 
-    public static List<Log> getAllLogsFromDb(Context context) {
+    public static UploadLogsDAO getAllLogsFromDb(Context context) {
         DAO dbObj = new DAO(context);
-        List<Log> allLogs;
+        UploadLogsDAO allUploadLogsDAO = new UploadLogsDAO();
+        List<Log> logs;
         try {
-            allLogs = dbObj.getAllLogs();
+            logs = dbObj.getAllLogs();
         } catch (Exception e) {
-            System.out.println("Getting all Logs from DB failed in DbDelegate : " + e);
+            System.out.println("Getting all UploadLogsDAO from DB failed in DbDelegate : " + e);
             return null;
         }
-        return allLogs;
+//        allUploadLogsDAO.setSomeLogs(); // This can be used to test
+        allUploadLogsDAO.setLogs(logs);
+        return allUploadLogsDAO;
     }
 
     public static boolean clearLogsInDb(Context context) {
@@ -84,9 +88,11 @@ public class DbDelegate {
         try {
             dbObj.clearLogs();
         } catch (Exception e) {
-            System.out.println("Clearing Logs in Db failed in DbDelegate : " + e);
+            System.out.println("Clearing UploadLogsDAO in Db failed in DbDelegate : " + e);
             return false;
         }
         return true;
     }
+
+
 }
