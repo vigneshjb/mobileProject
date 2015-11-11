@@ -22,13 +22,15 @@ import cse535.group38.resquebot.utils.Constants;
  */
 public class ResqueBotDelegate {
 
-    public static void uploadLogsToServer(Context context, MainActivity a)throws Exception{
+    public static void uploadLogsToServer(Context context, MainActivity a){
         String logsToUpload = getLogsAsString(context);
         if (null==logsToUpload){
-            throw new Exception("No Logs to update");
+            a.showSnackBar("No Logs to update");
         }
-        PostLogs restOperation = new PostLogs(a);
-        restOperation.execute(Constants.URL, logsToUpload);
+        else {
+            PostLogs restOperation = new PostLogs(a);
+            restOperation.execute(Constants.URL, logsToUpload);
+        }
     }
 
     private static String getLogsAsString(Context context){
@@ -71,7 +73,7 @@ public class ResqueBotDelegate {
                 int responseCode=conn.getResponseCode();
                 if (responseCode == HttpsURLConnection.HTTP_OK) {
                     current_activity.showSnackBar("Logs Uploaded Successfully");
-//                    DbDelegate.clearLogsInDb(current_activity);
+                    DbDelegate.clearLogsInDb(current_activity);
                 } else {
                     current_activity.showSnackBar("Logs Upload Failed : Server Failed");
                 }

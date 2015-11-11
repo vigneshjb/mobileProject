@@ -104,12 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Onclick Listener for uploading logs
     public void uploadLogs(View view) {
-        try {
-            ResqueBotDelegate.uploadLogsToServer(getApplicationContext(),this);
-        }
-        catch (Exception e){
-            showSnackBar("Exception caught");
-        }
+        ResqueBotDelegate.uploadLogsToServer(getApplicationContext(),this);
     }
 
     // UI based Object Builder and flush UI
