@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new TabFragment(), "Task List");
         adapter.addFragment(new TabFragment(), "Create Task");
-        adapter.addFragment(new TabFragment(), "Upload UploadLogsDAO");
+        adapter.addFragment(new TabFragment(), "Upload Logs");
         viewPager.setAdapter(adapter);
     }
 
