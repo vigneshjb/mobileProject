@@ -31,14 +31,14 @@ RESETFUL SERVICE ENDPOINT / USAGE
 			~> GET/> "/healthcheck" => returns "Hello World!!" (if the service is active)
 			~> POST/> "/logs" => to upload logs to the server
 				REQUEST-BODY => {
-									"deviceID": "Vignesh-device",
-									"logs": [
-										{"timestamp":"fsdwef1", "desp":"kefnken1"},
-										{"timestamp":"fsdwef2", "desp":"kefnken2"},
-										{"timestamp":"fsdwef3", "desp":"kefnken3"},
-										{"timestamp":"fsdwef4", "desp":"kefnken4"}
-								    ]
-								}
+							"deviceID": "Vignesh-device",
+							"logs": [
+								{"timestamp":"fsdwef1", "description":"kefnken1"},
+								{"timestamp":"fsdwef2", "description":"kefnken2"},
+								{"timestamp":"fsdwef3", "description":"kefnken3"},
+								{"timestamp":"fsdwef4", "description":"kefnken4"}
+							]
+						}
 		- For the developer
 			~> GET/> "/logs/{'device_id'}" => To view the log file on the server for the device
 			~> DELETE/> "/logs/{'device_id'}" => To delete the log file on the server for the device
