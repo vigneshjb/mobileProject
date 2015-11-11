@@ -14,19 +14,34 @@ Folder Desp
  
 RESETFUL SERVICE ENDPOINT / USAGE
 ---------------------------------
-=> to run the service: 
+=> to run the service <dev environment>: 
     * open the /restService folder
     * execute ruby backend.rb
-    * the usage is POST/ http://localhost:4567/logs with 
-    	request-body => 
-	{
-	     "logs": [
-	      {"timestamp":"fsdwef1", "desp":"kefnken1"},
-	      {"timestamp":"fsdwef2", "desp":"kefnken2"},
-	      {"timestamp":"fsdwef3", "desp":"kefnken3"},
-	      {"timestamp":"fsdwef4", "desp":"kefnken4"}
-	    ]
-	}
+
+=> to deploy on heroku
+	* git remote add heroku https://git.heroku.com/resquebot-backend.git
+	* git add .
+	* git commit -m "<some message>"
+	* git push heroku master
+
+=> SERVICE DESCRIPTION
+	* ENDPOINT: http://resquebot-backend.herokuapp.com
+	* Services :
+		-Used by the mobile device:
+			~> GET/> "/healthcheck" => returns "Hello World!!" (if the service is active)
+			~> POST/> "/logs" => to upload logs to the server
+				REQUEST-BODY => {
+									"deviceID": "Vignesh-device",
+									"logs": [
+										{"timestamp":"fsdwef1", "desp":"kefnken1"},
+										{"timestamp":"fsdwef2", "desp":"kefnken2"},
+										{"timestamp":"fsdwef3", "desp":"kefnken3"},
+										{"timestamp":"fsdwef4", "desp":"kefnken4"}
+								    ]
+								}
+		- For the developer
+			~> GET/> "/logs/{'device_id'}" => To view the log file on the server for the device
+			~> DELETE/> "/logs/{'device_id'}" => To delete the log file on the server for the device
     	
 CREDITS
 -------

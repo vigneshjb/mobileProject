@@ -1,10 +1,7 @@
 package cse535.group38.resquebot;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,7 +17,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import cse535.group38.resquebot.model.Task;
-import cse535.group38.resquebot.utils.DAO;
+import cse535.group38.resquebot.dao.DAO;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**

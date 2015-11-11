@@ -35,7 +35,7 @@ public class PerformTasks {
                         case "SilentProfile":
                             AudioManager audioManagerVibrate = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
                             audioManagerVibrate.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-                            //Updating the Logs Table
+                            //Updating the UploadLogsDAO Table
                             log = new Log(dateFormat.format(date), "RINGER_MODE_CHANGED_TO_SILENT");
                             // java.lang.System.out.println("*********************RINGER_MODE_CHANGED_TO_SILENT***************************************************"+ dateFormat.format(date));
                             dbDelegate.writeLogToDb(log, context);
@@ -43,7 +43,7 @@ public class PerformTasks {
                         case "NormalProfile":
                             AudioManager audioManagerNormal = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
                             audioManagerNormal.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-                            //Updating the Logs Table
+                            //Updating the UploadLogsDAO Table
                             log = new Log(dateFormat.format(date), "RINGER_MODE_CHANGED_TO_NORMAL");
                             // java.lang.System.out.println("*********************RINGER_MODE_CHANGED_TO_NORMAL***************************************************"+ dateFormat.format(date));
                             dbDelegate.writeLogToDb(log, context);
@@ -53,7 +53,7 @@ public class PerformTasks {
                             int brightness = System.getInt(contentResolver, System.SCREEN_BRIGHTNESS);
                             brightness = 10;
                             System.putInt(contentResolver, System.SCREEN_BRIGHTNESS, brightness);
-                            //Updating the Logs Table
+                            //Updating the UploadLogsDAO Table
                             log = new Log(dateFormat.format(date), "BRIGHTNESS_REDUCED_TO_10");
                             //java.lang.System.out.println("*********************BRIGHTNESS_REDUCED_TO_10***************************************************"+ dateFormat.format(date));
                             dbDelegate.writeLogToDb(log, context);
